@@ -1,10 +1,16 @@
 import { useState } from "react";
 import Carousel from "./components/carousel";
 import Modal from "./components/modal";
+import Checkbox from "./components/checkbox";
 
 function App() {
 
   const [modal, setModal] = useState(false);
+
+  const [agreements, setAgreements] = useState({
+    overTwentyOne: false,
+    depositBonus: false,
+  })
 
   const rules = [
     {
@@ -47,7 +53,7 @@ function App() {
       text: "Алмазный сундук",
     }
   ]
-
+  console.log(agreements)
   return (
     <div className="h-[2000px]">
       <div className='w-full h-[1080px] bg-main-bg bg-no-repeat text-white'>
@@ -99,11 +105,30 @@ function App() {
         </div>
       </div>
       <Modal active={modal} setActive={setModal}>
-        <div>
-          Title
+        <div className="text-center text-5xl">
+          РЕГИСТРАЦИЯ
         </div>
-        <div className="font-sans">
-          some other
+        <div className="font-sans mt-6">
+          <div className="flex">
+            <select className="w-1/4 p-3 font-sans bg-gray-900 border border-gray-500 mr-2 rounded-lg">
+              <option value=""></option>
+              <option value="KZ"></option>
+            </select>
+            <input type="tel" className="w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" placeholder="+X XXX XXX XX XX" />
+          </div>
+          <input type="password" className="mt-2 w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" />
+          <ul className="mt-4 list-disc pl-6">
+            <li className="font-sans text-sm text-gray-300">Минимум 6 символов</li>
+            <li className="font-sans text-sm text-gray-300">Минимум 1 цифра</li>
+          </ul>
+          <Checkbox text="Мне больше 21 года" description="Я соглашаюсь с договором оферты" checked={agreements.overTwentyOne} setChecked={(checked) => setAgreements((prev) => ({
+            ...prev,
+            overTwentyOne: checked,
+          }))} />
+          <Checkbox text="Активировать бонус за депозит" description="Правила и условия бонусного предложения" checked={agreements.depositBonus} setChecked={(checked) => setAgreements((prev) => ({
+            ...prev,
+            depositBonus: checked,
+          }))} />
         </div>
       </Modal>
     </div>
