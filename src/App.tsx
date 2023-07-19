@@ -3,6 +3,10 @@ import Carousel from "./components/carousel";
 import Modal from "./components/modal";
 import Checkbox from "./components/checkbox";
 
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+}
+
 function App() {
 
   const [modal, setModal] = useState(false);
@@ -10,6 +14,11 @@ function App() {
   const [agreements, setAgreements] = useState({
     overTwentyOne: false,
     depositBonus: false,
+  })
+  const [credentials, setCredentials] = useState({
+    countryCode: "",
+    number: "",
+    password: "",
   })
 
   const rules = [
@@ -53,7 +62,39 @@ function App() {
       text: "Алмазный сундук",
     }
   ]
-  console.log(agreements)
+
+  const availableCodes = ["700", "701", "702", "703", "704"];
+
+  const onCountryChange = (e) => {
+    console.log(e.target.value)
+    let newPhone = credentials.number
+    if (e.target.value === "KZ") {
+      if (newPhone[0] !== "+") newPhone.replaceAt(0, "+")
+      if (!newPhone[0]) newPhone = "+"
+      if (newPhone[1] !== "7") newPhone.replaceAt(1, "7")
+      if (!newPhone[1]) newPhone = newPhone + "7"
+    }
+    setCredentials((prev) => ({
+      ...prev,
+      countryCode: e.target.value,
+      number: newPhone
+    }))
+  }
+
+  const onPhoneChange = (e) => {
+    setCredentials((prev) => ({
+      ...prev,
+      number: e.target.value,
+    }))
+  }
+
+  const onPasswordChange = (e) => {
+    setCredentials((prev) => ({
+      ...prev,
+      password: e.target.value,
+    }))
+  }
+
   return (
     <div className="h-[2000px]">
       <div className='w-full h-[1080px] bg-main-bg bg-no-repeat text-white'>
@@ -110,13 +151,18 @@ function App() {
         </div>
         <div className="font-sans mt-6">
           <div className="flex">
-            <select className="w-1/4 p-3 font-sans bg-gray-900 border border-gray-500 mr-2 rounded-lg">
-              <option value=""></option>
-              <option value="KZ"></option>
+            <select className="w-1/4 p-3 font-sans bg-gray-900 border border-gray-500 mr-2 rounded-lg" onChange={onCountryChange}>
+              <option value="">...</option>
+              <option value="KZ">🇰🇿</option>
             </select>
-            <input type="tel" className="w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" placeholder="+X XXX XXX XX XX" />
+            <div className="flex flex-col">
+              <input type="tel" value={credentials.number} onChange={onPhoneChange} className="w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" placeholder="+X XXX XXX XX XX" />
+              { credentials.number.length >= 5 && !availableCodes.includes(credentials.number.substring(2, 5)) && (
+                <div className="text-sm text-red-400 font-sans">Неверный код оператора. Введите настоящий номер телефона</div>
+              ) }
+            </div>
           </div>
-          <input type="password" className="mt-2 w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" />
+          <input type="password" value={credentials.password} onChange={onPasswordChange} className="mt-2 w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" />
           <ul className="mt-4 list-disc pl-6">
             <li className="font-sans text-sm text-gray-300">Минимум 6 символов</li>
             <li className="font-sans text-sm text-gray-300">Минимум 1 цифра</li>
@@ -129,6 +175,10 @@ function App() {
             ...prev,
             depositBonus: checked,
           }))} />
+          <button className="w-full bg-yellow-400 text-black p-4 font-bold mt-2 rounded-lg">
+            Зарегистрироваться
+          </button>
+          <div className="font-bold font-sans text-center mt-6">Есть аккаунт ? <span className="cursor-pointer text-yellow-400 font-sans">Войти</span></div>
         </div>
       </Modal>
     </div>
