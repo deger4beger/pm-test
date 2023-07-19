@@ -1,6 +1,10 @@
+import { useState } from "react";
 import Carousel from "./components/carousel";
+import Modal from "./components/modal";
 
 function App() {
+
+  const [modal, setModal] = useState(false);
 
   const rules = [
     {
@@ -91,9 +95,17 @@ function App() {
             Чем выше место в рейтинге, тем выше шанс выиграть призы
           </div>
           <Carousel items={carouselItems} />
-          <img src="public/assets/sign-btn.png" className="mt-10 cursor-pointer" />
+          <img src="public/assets/sign-btn.png" className="mt-10 cursor-pointer" onClick={() => setModal(true)} />
         </div>
       </div>
+      <Modal active={modal} setActive={setModal}>
+        <div>
+          Title
+        </div>
+        <div className="font-sans">
+          some other
+        </div>
+      </Modal>
     </div>
   )
 }
