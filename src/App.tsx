@@ -1,3 +1,5 @@
+import Carousel from "./components/carousel";
+
 function App() {
 
   const rules = [
@@ -19,8 +21,31 @@ function App() {
     },
   ]
 
+  const carouselItems = [
+    {
+      img: "public/assets/bronze-chest.png",
+      text: "Бронзовый сундук",
+    },
+    {
+      img: "public/assets/silver-chest.png",
+      text: "Серебряный сундук",
+    },
+    {
+      img: "public/assets/gold-chest.png",
+      text: "Золотой сундук",
+    },
+    {
+      img: "public/assets/platinum-chest.png",
+      text: "Платиновый сундук",
+    },
+    {
+      img: "public/assets/diamond-chest.png",
+      text: "Алмазный сундук",
+    }
+  ]
+
   return (
-    <>
+    <div className="h-[2000px]">
       <div className='w-full h-[1080px] bg-main-bg bg-no-repeat text-white'>
         <div className='flex justify-between items-center px-[13px] py-[20px]'>
           <img
@@ -42,7 +67,7 @@ function App() {
         </div>
         <img src="public/assets/main-text.svg" className='pl-[200px]' alt="#" />
       </div>
-      <div className="bg-rules-bg h-[1080px] relative bottom-[560px] pt-[230px] text-white flex justify-center items-center font-parimatch flex-col">
+      <div className="bg-rules-bg bg-no-repeat h-[1080px] relative bottom-[560px] pt-[230px] text-white flex justify-center items-center font-parimatch flex-col">
         <div className="text-7xl italic">
           Как принять участие
         </div>
@@ -51,13 +76,24 @@ function App() {
             return (
               <div key={index} className="text-center">
                 <img src={img} alt="#" className="w-[250px] h-[220px] mx-[50px]" />
-                <div className="w-[300px] text-center font-sans text-gray-300">{text}</div>
+                <div className="w-[300px] text-center font-sans text-gray-300 pt-2">{text}</div>
               </div>
             );
           }) }
         </div>
       </div>
-    </>
+      <div className="h-[700px] bg-gradient-to-t from-black to-cyan-950 relative bottom-[760px] pt-12">
+        <div className="flex justify-center text-white flex-col items-center">
+          <div className="text-7xl">
+            Сундуки
+          </div>
+          <div className="mt-6 font-sans text-gray-400 text-xl">
+            Чем выше место в рейтиге, тем выше шанс выиграть призы
+          </div>
+          <Carousel items={carouselItems} />
+        </div>
+      </div>
+    </div>
   )
 }
 
