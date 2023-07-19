@@ -88,9 +88,10 @@ function App() {
             Сундуки
           </div>
           <div className="mt-6 font-sans text-gray-400 text-xl">
-            Чем выше место в рейтиге, тем выше шанс выиграть призы
+            Чем выше место в рейтинге, тем выше шанс выиграть призы
           </div>
           <Carousel items={carouselItems} />
+          <img src="public/assets/sign-btn.png" className="mt-10 cursor-pointer" />
         </div>
       </div>
     </div>
