@@ -95,6 +95,10 @@ function App() {
     }))
   }
 
+  const hasNumber = (myString) => {
+    return /\d/.test(myString);
+  }
+
   return (
     <div className="h-[2000px]">
       <div className='w-full h-[1080px] bg-main-bg bg-no-repeat text-white'>
@@ -155,7 +159,7 @@ function App() {
               <option value="">...</option>
               <option value="KZ">🇰🇿</option>
             </select>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <input type="tel" value={credentials.number} onChange={onPhoneChange} className="w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" placeholder="+X XXX XXX XX XX" />
               { credentials.number.length >= 5 && !availableCodes.includes(credentials.number.substring(2, 5)) && (
                 <div className="text-sm text-red-400 font-sans">Неверный код оператора. Введите настоящий номер телефона</div>
@@ -163,6 +167,12 @@ function App() {
             </div>
           </div>
           <input type="password" value={credentials.password} onChange={onPasswordChange} className="mt-2 w-full p-[11px] font-sans bg-gray-900 border border-gray-500 rounded-lg" />
+          { credentials.password.length > 0 && (credentials.password.length < 6) && (
+            <div className="text-sm text-red-400 font-sans">Пароль должен содержать больше символов</div>
+          ) }
+          { credentials.password.length > 0 && (!hasNumber(credentials.password)) && (
+            <div className="text-sm text-red-400 font-sans">Пароль должен содержать цифру</div>
+          ) }
           <ul className="mt-4 list-disc pl-6">
             <li className="font-sans text-sm text-gray-300">Минимум 6 символов</li>
             <li className="font-sans text-sm text-gray-300">Минимум 1 цифра</li>
