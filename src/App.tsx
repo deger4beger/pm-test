@@ -120,7 +120,7 @@ function App() {
           />
           </div>
         </div>
-        <img src="public/assets/main-text.svg" className='pl-[200px]' alt="#" />
+        <img src="public/assets/main-text.svg" className='sm:pl-[200px] pl-[20px] pt-[300px] sm:pt-0' alt="#" />
       </div>
       <div className="bg-rules-bg bg-no-repeat h-[1080px] relative bottom-[560px] pt-[230px] text-white flex justify-center items-center font-parimatch flex-col">
         <div className="text-7xl italic">
